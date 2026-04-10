@@ -797,9 +797,8 @@ footer { background: var(--ink); padding: 2.5rem 1.5rem; text-align: center; }
 const JSONBIN_API_KEY = '$2a$10$Ladf2pyBj87Effobg7jD4uRSyqr8x22EmHHwiqJlI9UdxU9n1oUaS';   // e.g. '$2a$10$abc...'
 const JSONBIN_BIN_ID  = '69d9858336566621a89dde17';             // e.g. '6642f3a...'
 /* ================================================================ */
-
-const configured = JSONBIN_API_KEY !== '$2a$10$Ladf2pyBj87Effobg7jD4uRSyqr8x22EmHHwiqJlI9UdxU9n1oUaS'
-                && JSONBIN_BIN_ID  !== '69d9858336566621a89dde17';
+const JSONBIN_API_KEY = 'YOUR_JSONBIN_API_KEY';
+const JSONBIN_BIN_ID  = 'YOUR_JSONBIN_BIN_ID';
 
 if (!configured) document.getElementById('setup-banner').classList.add('visible');
 
