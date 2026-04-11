@@ -33,11 +33,30 @@ export default async function handler(req, res) {
       const data = await readRes.json();
       const wishes = Array.isArray(data.record) ? data.record : [];
 
-      wishes.push({
-  id: crypto.randomUUID(),
-  ...newWish,
-  ts: Date.now()
-});
+      if (req.method === 'DELETE') {
+  const { id } = req.body;
+
+  const readRes = await fetch(`${BIN_URL}/latest`, {
+    headers: { 'X-Master-Key': API_KEY }
+  });
+
+  const data = await readRes.json();
+  let wishes = Array.isArray(data.record) ? data.record : [];
+
+  wishes = wishes.filter(w => w.id !== id);
+
+  await fetch(BIN_URL, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Master-Key': API_KEY,
+      'X-Bin-Versioning': 'false'
+    },
+    body: JSON.stringify(wishes)
+  });
+
+  return res.status(200).json({ success: true });
+}
 
       // Save updated array
       await fetch(BIN_URL, {
