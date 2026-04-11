@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/api/wishes", "destination": "/api/wishes" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
