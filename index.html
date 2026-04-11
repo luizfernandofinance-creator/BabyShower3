@@ -488,24 +488,20 @@ function switchMedia(type) {
   document.getElementById('tab-video').classList.toggle('active', type === 'video');
 }
 
-/* ── Photo preview ── */
-document.getElementById('inp-photo').addEventListener('change', function(e) {
-  var file = e.target.files[0];
-  if (!file) return;
-  if (file.size > 5 * 1024 * 1024) { alert('Photo must be under 5MB'); return; }
-  function compressImage(file, callback) {
+/* ── Photo preview with canvas compression ──
+   Resizes to max 600px and re-encodes as JPEG @ 70% quality.
+   Keeps base64 strings small and safe for JSONBin storage.            */
+function compressImage(file, callback) {
   var reader = new FileReader();
   reader.onload = function(ev) {
     var img = new Image();
     img.onload = function() {
-      // Resize to max 600px on either side
       var MAX = 600;
       var w = img.width, h = img.height;
       if (w > MAX || h > MAX) {
         if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
         else        { w = Math.round(w * MAX / h); h = MAX; }
       }
-      // Draw onto canvas and export as JPEG at 70% quality
       var canvas = document.createElement('canvas');
       canvas.width = w; canvas.height = h;
       canvas.getContext('2d').drawImage(img, 0, 0, w, h);
@@ -514,6 +510,16 @@ document.getElementById('inp-photo').addEventListener('change', function(e) {
     img.src = ev.target.result;
   };
   reader.readAsDataURL(file);
+}
+
+document.getElementById('inp-photo').addEventListener('change', function(e) {
+  var file = e.target.files[0];
+  if (!file) return;
+  if (file.size > 5 * 1024 * 1024) { alert('Photo must be under 5MB'); return; }
+  compressImage(file, function(dataUrl) {
+    document.getElementById('photo-thumb').src = dataUrl;
+    document.getElementById('photo-preview').style.display = 'block';
+  });
 });
 
 /* ── Video preview + duration check ── */
