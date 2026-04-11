@@ -34,9 +34,10 @@ export default async function handler(req, res) {
       const wishes = Array.isArray(data.record) ? data.record : [];
 
       wishes.push({
-        ...newWish,
-        ts: Date.now()
-      });
+  id: crypto.randomUUID(),
+  ...newWish,
+  ts: Date.now()
+});
 
       // Save updated array
       await fetch(BIN_URL, {
