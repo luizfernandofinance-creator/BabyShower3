@@ -1,0 +1,11 @@
+{
+  "functions": {
+    "api/wishes.js": {
+      "runtime": "nodejs20.x"
+    }
+  },
+  "rewrites": [
+    { "source": "/api/wishes", "destination": "/api/wishes" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
