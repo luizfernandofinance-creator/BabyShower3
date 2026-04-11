@@ -1,4 +1,5 @@
-module.exports = async function handler(req, res) {// api/wishes.js — Vercel serverless function (CommonJS)
+module.exports = async function handler(req, res) {
+  // api/wishes.js — Vercel serverless function (CommonJS)
 
 const API_KEY = process.env.JSONBIN_API_KEY;
 const BIN_ID  = process.env.JSONBIN_BIN_ID;
