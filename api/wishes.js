@@ -87,7 +87,9 @@ module.exports = async function handler(req, res) {
     }
 
   } catch (err) {
-    console.error('API error:', err);
-    return res.status(500).json({ error: err.message });
-  }
-};
+  console.error('FULL ERROR:', err);
+  return res.status(500).json({
+    error: err.message,
+    stack: err.stack
+  });
+}
